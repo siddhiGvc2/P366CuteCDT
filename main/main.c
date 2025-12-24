@@ -354,7 +354,7 @@ void app_main(void)
     Out4094(0x00);; // set all outputs inactive
     TFT_main();
     DisplayBootingUp();
-    
+    displayStripes();
     showLogo();
     
     sprintf(payload,"*PID,%s#",SerialNumber);

@@ -1,3 +1,14 @@
+## 241225
+  strcpy(CDTColor[3],CDTColorTable[(decoded_data[24] & 0x70) >> 4]);
+    ESP_LOGI (TAG, "CDT Details are %s - %d%s:%d%s:%d%s:%d%s", Command,CDTime[0],CDTColor[0],CDTime[1],CDTColor[1],CDTime[2],CDTColor[2],CDTime[3],CDTColor[3]);
+    char payload[200];
+    sprintf(payload,"*TL,%s,%s,%d%s,%d%s,%d%s,%d%s#",SerialNumber,Command,CDTime[0],CDTColor[0],CDTime[1],CDTColor[1],CDTime[2],CDTColor[2],CDTime[3],CDTColor[3]);
+    send(sock, payload, strlen(payload), 0);
+
+    use there paratmeters to display on screen
+    chnage time every second.
+    this command send time once when things change. reduce time in code and update seconds
+    
 ## 231225
 -- P366-TFT_CA ported to CDT Manager
 -- added base64 decoding and display values in analysePacketUart. 

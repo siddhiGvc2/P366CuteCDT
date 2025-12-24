@@ -105,4 +105,5 @@ extern void DisplayCoinInserted(void);
 
 
 extern void SetCINHO (void);
+extern void displayStripes(void);
 

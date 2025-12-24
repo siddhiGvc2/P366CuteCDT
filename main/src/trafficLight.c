@@ -1,26 +1,38 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "freertos/semphr.h"
-#include "esp_timer.h"
-#include "esp_lcd_panel_io.h"
-#include "esp_lcd_panel_vendor.h"
-#include "esp_lcd_panel_ops.h"
-#include "driver/gpio.h"
-#include "driver/spi_master.h"
-#include "esp_err.h"
+#include "freertos/event_groups.h"
+#include "esp_system.h"
+#include "esp_wifi.h"
+#include "esp_mac.h"
+#include "esp_event.h"   
 #include "esp_log.h"
+#include "nvs_flash.h"
+#include "driver/gpio.h"
+#include "lwip/err.h"
+#include "lwip/sys.h"
+#include "lwip/sockets.h"
+#include "esp_http_client.h"
+#include "esp_https_ota.h"
+#include "esp_timer.h"
+#include "esp_ota_ops.h"
+#include "driver/uart.h"
+#include "esp_netif.h"
+#include "rom/ets_sys.h"
+#include "esp_smartconfig.h"
+#include <sys/socket.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <arpa/inet.h>
 #include "lvgl.h"
+#include "externVars.h"
+#include "calls.h"
 
 
-int Hours=10;
-int Mins=40;
-int Secs=12;
-int CDTime[16];
-char CDTColor[16][8] = {"R24", "G12", "A15", "R10"};
-char CDTColorTable[4][2] = {"X","G","A","R"};
-char CommandTable[10][10] = {"XXX","FIXED","VA","FRCE FLAS","ERR FLASH","ATCS","MANUAL","PREDECTIVE","MAN OFF","XXX"};
-char Command[10]="FIXED";
+
+
 static const char *TAG = "MAIN";
 
 lv_obj_t *time_label;  // Global time label referenc
