@@ -1,9 +1,14 @@
+## 231225
+-- P366-TFT_CA ported to CDT Manager
+-- added base64 decoding and display values in analysePacketUart. 
+-- next step is to add display
 
 ## 181025
 -- BlankImage error solved .ESP-TOUCH tested- woking
 -- in RestartDevice if edges and pulse stop delay is not zero, wait for 3 seconds and then reset
 -- this avoid any issue of extra pulse due to noise
 -- do not display ESP TOUCH DONE image
+--RestartDevice removed after ESP-DONE
 
 ## 111025
 -- changes made fo solve bug in ShowQrCode

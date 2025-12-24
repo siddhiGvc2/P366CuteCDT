@@ -215,3 +215,15 @@ char UartPacketReceived = 0;
 int VendingMode;
 
 char TextStatus[100];
+
+// added on 17-02-25
+int Hours;
+int Mins;
+int Secs;
+int CDTime[16];
+char CDTColor[16][8];
+int CDTimeInput[16];
+char CDTColorTable[4][2] = {"X","G","A","R"};
+char CommandTable[10][11] = {"XXX","FIX","VA","FoFL","ErFL","ATCS","MNL","PDET","MANO","XXX"};
+char Command[10]="FIX";
+bool TimerSet;

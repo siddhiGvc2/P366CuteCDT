@@ -29,6 +29,7 @@
 
 #include "externVars.h"
 #include "calls.h"
+#include "mbedtls/base64.h"
 
 
 
@@ -41,6 +42,93 @@ void uart_write_string_ln(const char * );
 
 
 void process_uart_packet(const char *);
+
+
+void decode_base64_pkt(char *pkt) {
+    int len = strlen(pkt);
+    bool PacketOkay;
+
+    // Ensure it starts with "FF" and ends with "FE"
+   
+     ESP_LOGI(TAG, "Started Decoding Packet" );
+
+    // Extract Base64-encoded data (skip "FF" and trim "FE")
+    int base64_len = len - 2;
+    char base64_data[base64_len + 1];
+    strncpy(base64_data, pkt + 1, base64_len);
+    base64_data[base64_len] = '\0';  // Null-terminate
+    // ESP_LOGI(TAG, "Packet Stripped %s",base64_data);
+    // Remove any unwanted characters (spaces/newlines)
+    //clean_base64(base64_data);
+    
+    // ESP_LOGI(TAG, "Base64 Encoded Data (cleaned): %s", base64_data);
+
+    // Decode Base64
+    uint8_t decoded_data[256];  // Adjust buffer size as needed
+    size_t output_len = 0;
+    int ret = mbedtls_base64_decode(decoded_data, sizeof(decoded_data), &output_len, 
+                                    (const unsigned char*)base64_data, strlen(base64_data));
+
+    if (ret == 0) {
+        // Print decoded data in hex format
+        // ESP_LOGI(TAG, "Decoded Hex Data:");
+        for (size_t i = 0; i < output_len; i++) {
+            // printf("%02X ", decoded_data[i]);
+        }
+        printf("\n");
+    } else {
+        ESP_LOGI(TAG, "Base64 decode failed! Error code: %d", ret);
+    }
+    int x = decoded_data[0];
+    int y = output_len - 3;
+    if (x ==  y)
+    {
+        PacketOkay = 1;
+        // ESP_LOGI(TAG, "Length Byte Matched Actual is %d , Decoded is %d" , y , x);
+    }
+    else
+    {
+        PacketOkay = 0;
+        return;
+        // ESP_LOGI(TAG, "Length Error Actual is %d , Decoded is %d" , y , x);
+    }
+
+    Hours = decoded_data[1];
+    Mins = decoded_data[2];
+    Secs = decoded_data[3];
+     ESP_LOGI (TAG, "Time is %d:%d:%d", Hours,Mins,Secs);
+
+    
+    CDTime[0] = decoded_data[7];
+    CDTime[1] = decoded_data[8];
+    CDTime[2] = decoded_data[9];
+    CDTime[3] = decoded_data[10];
+
+    // added on 22-02-025 for  // when 0 show mode(Fixed,Manual, VA etc..)
+    CDTimeInput[0]=decoded_data[7];
+    CDTimeInput[1]=decoded_data[8];
+    CDTimeInput[2]=decoded_data[9];
+    CDTimeInput[3]=decoded_data[10];
+    
+  
+    if (decoded_data[29] >= 9)
+        decoded_data[29] = 9;
+    strcpy(Command,CommandTable[decoded_data[29]]);
+  
+    strcpy(CDTColor[0],CDTColorTable[(decoded_data[23] & 0xe0) >> 5]);
+    strcpy(CDTColor[1],CDTColorTable[(decoded_data[23] & 0x1C) >> 2]);
+    strcpy(CDTColor[2],CDTColorTable[((decoded_data[23] & 0x03)<< 1) + ((decoded_data[24] & 0x80) >> 7)]) ;
+    strcpy(CDTColor[3],CDTColorTable[(decoded_data[24] & 0x70) >> 4]);
+    ESP_LOGI (TAG, "CDT Details are %s - %d%s:%d%s:%d%s:%d%s", Command,CDTime[0],CDTColor[0],CDTime[1],CDTColor[1],CDTime[2],CDTColor[2],CDTime[3],CDTColor[3]);
+    char payload[200];
+    sprintf(payload,"*TL,%s,%s,%d%s,%d%s,%d%s,%d%s#",SerialNumber,Command,CDTime[0],CDTColor[0],CDTime[1],CDTColor[1],CDTime[2],CDTColor[2],CDTime[3],CDTColor[3]);
+    send(sock, payload, strlen(payload), 0);
+    if(MQTTRequired)
+    {
+    mqtt_publish_msg(payload);
+    }
+}
+
 
 //added on 120525
 void UartDataReceivedShowQRCode (void)
@@ -659,6 +747,18 @@ void process_uart_packet(const char *pkt){
     {
         DisplayStatusText();
     }
+
+// added for decoding base 64
+        else if((pkt[0])==0xff){
+        int x = strlen(pkt);
+         ESP_LOGI(TAG,"Packet Start Received");
+        if (pkt[x-1] == 0xfe)    
+        {
+            ESP_LOGI(TAG,"Packet End Received");
+            decode_base64_pkt(pkt);
+        }
+    }
+
   
     else{
         if (UartDebugInfoRequired)

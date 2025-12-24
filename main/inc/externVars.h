@@ -220,3 +220,15 @@ extern char UartPacketReceived;
 extern int VendingMode;
 
 extern char TextStatus[100];
+//added on 17-02-25
+extern int Hours;
+extern int Mins ;
+extern int Secs;
+extern int CDTime[16];
+extern int CDTimeInput[16];
+extern char CDTColor[16][8];
+extern char CDTColorTable[4][2];
+extern char CommandTable[10][11];
+extern char Command[10];
+extern bool TimerSet;
+
