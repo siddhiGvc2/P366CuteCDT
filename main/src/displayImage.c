@@ -196,7 +196,7 @@ void showLogo(void)
 
 void DisplayBootingUp(void)
 {
-    Image2BDisplayed = ImageBootingUp;
+    // Image2BDisplayed = ImageBootingUp;
 
 
 }
@@ -204,25 +204,25 @@ void DisplayBootingUp(void)
 void DisplayNoWiFi(void)
 {
 
-    Image2BDisplayed = ImageNoWifi;
+    // Image2BDisplayed = ImageNoWifi;
 
 }
 
 void DisplayCashReceived(void)
 {
-    Image2BDisplayed = ImageCashReceived;
+    // Image2BDisplayed = ImageCashReceived;
 
 }
 
 void DisplaySelectItem(void)
 {
-    Image2BDisplayed = ImageSelectItem;
+    // Image2BDisplayed = ImageSelectItem;
    
 }
 
 void DisplayItemVend(void)
 {
-    Image2BDisplayed = ImageItemVend;
+    // Image2BDisplayed = ImageItemVend;
     
 }
 
@@ -231,26 +231,26 @@ void DisplayItemVend(void)
 
 void DisplayCashlessDevice(void)
 {
-    Image2BDisplayed = ImageCashlessDevice;
+    // Image2BDisplayed = ImageCashlessDevice;
     
 }
 
 void DisplayNoStock(void)
 {
-    Image2BDisplayed = ImageNoStock;
+    // Image2BDisplayed = ImageNoStock;
     //DisplayMode = ModeNoStock;
 }
 
 void DisplayStatusText(void)
 {
     DisplayMode = ModeNone;
-    Image2BDisplayed = StatusText;
+    // Image2BDisplayed = StatusText;
     
 }
 
 void DisplayCoinInserted(void)
 {
-    Image2BDisplayed = ImageCoinInserted;
+    // Image2BDisplayed = ImageCoinInserted;
 
 }
 
@@ -265,7 +265,7 @@ void DisplayCoinInserted(void)
             DisplayNoStock();
         }
         else{
-        Image2BDisplayed = ImageQRCode;
+        // Image2BDisplayed = ImageQRCode;
         }
     }
 //         if (lv_obj_is_valid(img))
