@@ -187,7 +187,7 @@ void showLogo(void)
      if (example_lvgl_lock(-1)) {
     img6 = lv_img_create(lv_scr_act());
     lv_img_set_src(img6, &gvcLogo);
-    lv_obj_align(img6, LV_ALIGN_TOP_MID, 0, 240);
+    lv_obj_align(img6, LV_ALIGN_TOP_MID, 0, 255);
       example_lvgl_unlock();
      }
 

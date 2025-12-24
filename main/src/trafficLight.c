@@ -162,6 +162,7 @@ void displayStripes(void) {
 
     lv_obj_t * parent = lv_scr_act();
     lv_obj_set_style_bg_color(parent, lv_color_white(), LV_PART_MAIN); // Set white background
+    lv_obj_set_scrollbar_mode(parent, LV_SCROLLBAR_MODE_OFF);
     static lv_style_t style_label;
    
     const char *color_names[] = {"WHITE", "RED", "ORANGE", "GREEN", "GREEN"};
@@ -179,6 +180,7 @@ void displayStripes(void) {
     lv_obj_set_style_bg_color(strip, colors[0], LV_PART_MAIN);
     
     time_label = lv_label_create(strip);
+    lv_obj_set_scrollbar_mode(time_label, LV_SCROLLBAR_MODE_OFF);
     lv_label_set_text_fmt(time_label, "%d:%d:%d", Hours, Mins, Secs);
     lv_obj_set_style_text_color(time_label, lv_color_black(), LV_PART_MAIN);
     lv_obj_align(time_label, LV_ALIGN_CENTER, 0, 0); 
@@ -196,7 +198,9 @@ void displayStripes(void) {
         if (i == 0) {
             // Label for first stripe
             color_label[0] = lv_label_create(stripe);
+            lv_obj_set_scrollbar_mode(color_label[0], LV_SCROLLBAR_MODE_OFF);
             lv_label_set_text_fmt(color_label[0], "%d", CDTime[0]);
+
             if (strstr(CDTColor[0], "R") != NULL && i == 1) {
                 lv_obj_set_style_text_color(color_label[0], colors[1], LV_PART_MAIN);
             } else if (strstr(CDTColor[0], "A") != NULL && i == 2) {
@@ -247,6 +251,7 @@ void displayStripes(void) {
         if (i == 0) {
             // Create label for the first stripe
             color_label[1] = lv_label_create(stripe);
+             lv_obj_set_scrollbar_mode(color_label[1], LV_SCROLLBAR_MODE_OFF);
             lv_label_set_text_fmt(color_label[1], "%d", CDTime[1]);
             if (strstr(CDTColor[1], "R") != NULL && i == 1) {
                 lv_obj_set_style_text_color(color_label[1], colors[1], LV_PART_MAIN);
@@ -300,6 +305,7 @@ void displayStripes(void) {
         if (i == 0) {
             // Create label for the first stripe
             color_label[2] = lv_label_create(stripe);
+             lv_obj_set_scrollbar_mode(color_label[2], LV_SCROLLBAR_MODE_OFF);
             lv_label_set_text_fmt(color_label[2], "%d", CDTime[2]);
             if (strstr(CDTColor[2], "R") != NULL && i == 1) {
                 lv_obj_set_style_text_color(color_label[2], colors[1], LV_PART_MAIN);
@@ -353,6 +359,7 @@ void displayStripes(void) {
         if (i == 0) {
             // Create label for the first stripe
             color_label[3] = lv_label_create(stripe);
+             lv_obj_set_scrollbar_mode(color_label[3], LV_SCROLLBAR_MODE_OFF);
             lv_label_set_text_fmt(color_label[3], "%d", CDTime[3]);
             if (strstr(CDTColor[3], "R") != NULL && i == 1) {
                 lv_obj_set_style_text_color(color_label[3], colors[1], LV_PART_MAIN);
